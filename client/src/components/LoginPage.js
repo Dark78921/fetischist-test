@@ -1,15 +1,23 @@
-// src/components/LoginPage.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function LoginPage({ onLogin }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Implement login API call here
-    onLogin({ username });
+    try {
+      const res = await axios.post('http://localhost:5000/login', { username, password });
+      // Save user info or token
+      onLogin(res.data);
+      // Redirect to main page
+      navigate('/');
+    } catch (err) {
+      alert('Login failed: ' + (err.response?.data?.error || err.message));
+    }
   };
 
   return (
@@ -17,7 +25,7 @@ function LoginPage({ onLogin }) {
       <div className="bg-white p-8 rounded shadow max-w-sm w-full">
         <h2 className="text-2xl mb-4 text-center">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Username and Password fields */}
+          {/* Username and Password */}
           <div>
             <label className="block mb-1">Username</label>
             <input
@@ -38,7 +46,6 @@ function LoginPage({ onLogin }) {
               required
             />
           </div>
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
@@ -46,12 +53,8 @@ function LoginPage({ onLogin }) {
             Login
           </button>
         </form>
-        {/* Link to Register page */}
         <p className="mt-4 text-center">
-          Don't have an account?{' '}
-          <Link to="/register" className="text-blue-500 hover:underline">
-            Register here
-          </Link>
+          Don't have an account? <a href="/register" className="text-blue-500 hover:underline">Register here</a>
         </p>
       </div>
     </div>

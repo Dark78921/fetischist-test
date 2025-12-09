@@ -1,16 +1,23 @@
-// src/components/RegisterPage.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function RegisterPage({ onRegister }) {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Implement registration API call here
-    onRegister({ username, email, password });
+    try {
+      const res = await axios.post('http://localhost:5000/register', { username, email, password });
+      alert('Registration successful! You can now log in.');
+      onRegister({ username, email });
+      navigate('/login');
+    } catch (err) {
+      alert('Registration failed: ' + (err.response?.data?.error || err.message));
+    }
   };
 
   return (
@@ -18,7 +25,7 @@ function RegisterPage({ onRegister }) {
       <div className="bg-white p-8 rounded shadow max-w-sm w-full">
         <h2 className="text-2xl mb-4 text-center">Register</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Username */}
+          {/* Username, Email, Password */}
           <div>
             <label className="block mb-1">Username</label>
             <input
@@ -29,7 +36,6 @@ function RegisterPage({ onRegister }) {
               required
             />
           </div>
-          {/* Email */}
           <div>
             <label className="block mb-1">Email</label>
             <input
@@ -40,7 +46,6 @@ function RegisterPage({ onRegister }) {
               required
             />
           </div>
-          {/* Password */}
           <div>
             <label className="block mb-1">Password</label>
             <input
@@ -51,7 +56,6 @@ function RegisterPage({ onRegister }) {
               required
             />
           </div>
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600"
@@ -59,12 +63,8 @@ function RegisterPage({ onRegister }) {
             Register
           </button>
         </form>
-        {/* Link to Login page */}
         <p className="mt-4 text-center">
-          Already have an account?{' '}
-          <Link to="/login" className="text-blue-500 hover:underline">
-            Login here
-          </Link>
+          Already have an account? <a href="/login" className="text-blue-500 hover:underline">Login here</a>
         </p>
       </div>
     </div>
