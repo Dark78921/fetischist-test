@@ -77,7 +77,7 @@ For the **Frontend**:
 In the backend directory, run:
 
 ```bash
-npm start
+npm start:server
 ```
 
 This will start the backend server on `http://localhost:5000`.
@@ -87,10 +87,22 @@ This will start the backend server on `http://localhost:5000`.
 In the frontend directory, run:
 
 ```bash
-npm start
+npm start:client
 ```
 
 This will start the frontend React app, typically accessible at `http://localhost:3000`.
+
+---
+
+### 3. Run Project
+
+In the root directory, run:
+
+```bash
+npm start
+```
+
+This will start the whole project.
 
 ---
 
