@@ -1,0 +1,51 @@
+# Node modules
+node_modules/
+
+# Build output
+build/
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# IDEs and editors
+.vscode/
+.idea/
+.DS_Store
+
+# MacOS
+/.DS_Store
+
+# MacOS Spotlight
+/.Spotlight-V100
+/.Trashes
+
+# Logs and temporary files
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+*.log
+
+# Misc
+*.pid
+*.seed
+*.pid.lock
+
+# VS Code settings
+.vscode/
+
+# Optional: for React Native or Expo projects
+# /ios/
+# /android/
+
+# Your custom folders/files
+# /your-custom-folder/
