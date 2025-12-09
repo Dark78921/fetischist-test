@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
-import LoginPage from './components/LoginPage';
-import RegisterPage from './components/RegisterPage';
-import MainPage from './components/MainPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import MainPage from './pages/MainPage';
+import LessonCatalog from './pages/LessonCatalog';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -26,6 +27,7 @@ function App() {
         />
         <Route path="/login" element={<LoginPage onLogin={handleLogin} />} />
         <Route path="/register" element={<RegisterPage onRegister={handleRegister} />} />
+        <Route path='/lessons' element={<LessonCatalog />} />
       </Routes>
     </Router>
   );

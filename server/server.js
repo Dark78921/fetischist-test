@@ -3,17 +3,12 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 
+const User = require('./models/User');
+const Lesson = require('./models/Lesson');
+
 const app = express();
 app.use(express.json());
-app.use(cors()); // enable CORS for your frontend
-
-// User schema
-const UserSchema = new mongoose.Schema({
-  username: { type: String, unique: true },
-  email: { type: String, unique: true },
-  password: String,
-});
-const User = mongoose.model('User', UserSchema);
+app.use(cors());
 
 // Register route
 app.post('/register', async (req, res) => {
@@ -43,8 +38,19 @@ app.post('/login', async (req, res) => {
   }
 });
 
+//Lesson route
+app.get('/lessons', async (req, res) => {
+  try {
+    const lessons = await Lesson.find({});
+    res.json(lessons);
+  } catch (err) {
+    console.error('Error fetching lessons:', err);
+    res.status(500).json({ error: 'Failed to fetch lessons' });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
-mongoose.connect('your_mongodb_connection_string_here', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb://localhost:27017/coursebuilder', { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
